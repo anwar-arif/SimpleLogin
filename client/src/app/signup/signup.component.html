@@ -1,0 +1,37 @@
+<mat-card class="form-container">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="signUpForm">
+        <table class="full-width" cellspacing="0">
+          <tr>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Name" formControlName="name"type="text" name="name" required>
+                </mat-form-field>
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Email" formControlName="email" type="email" name="eamil" required>
+                </mat-form-field>
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Password" formControlName="password"type="password" name="password" required>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+      </form>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="onSubmit()" color="primary" [disabled]="signUpForm.invalid">Submit</button>
+      <button mat-raised-button (click)="onLogin()" color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>
