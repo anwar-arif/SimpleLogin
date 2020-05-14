@@ -13,7 +13,8 @@ export class UserService {
   private baseUrl = "https://localhost:44301/api/";
   private userUrl = this.baseUrl + "users/";
   
-  private message: String;
+  private _messageSource = new Subject<string>();
+  actionMessage$ = this._messageSource.asObservable();
 
   login(user: User): Observable<User> {
     return this.http.put<User>(this.userUrl, user);
@@ -23,24 +24,7 @@ export class UserService {
     return this.http.post<User>(this.userUrl, user);
   }
 
-  setError(msg?: string) {
-    this.message = (msg) ? msg : "Something went wrong";
-  }
-
-  setSuccess(msg?: string) {
-    this.message = (msg) ? msg : "Succeful";
-  }
-
-  getMessage() {
-    return this.message;
-  }
-
-  errorHandler(errorResponse: HttpErrorResponse) {
-    if (errorResponse.error instanceof ErrorEvent) {
-      console.error('Client side error', errorResponse.error.message);
-    } else {
-      console.error('Server side error', errorResponse);
-    }
-    return throwError('Something went wrong! Try again later.');
+  setMessage(msg?: string) {
+    this._messageSource.next(msg);
   }
 }

@@ -23,13 +23,13 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  ngOnSubmit() {
+  onSubmit() {
     this.userService.signup(this.signUpForm.value).subscribe(
       response => {
-        this.userService.setSuccess();
+        this.userService.setMessage("Signed up successfully");
       },
       error => {
-        this.userService.setError();
+        this.userService.setMessage(error.error);
       }
     );
     this.router.navigate(['/home']);
