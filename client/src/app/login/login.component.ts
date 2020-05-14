@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup, Form, FormControl } from '@angular/forms';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { Validators, FormBuilder, FormGroup, Form, FormControl } from '@angular/
 export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private userService: UserService) { }
 
   
   loginForm: FormGroup;
@@ -23,7 +25,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    alert('okay');
+    this.userService.login(this.loginForm.value).subscribe(
+      response => {
+        this.userService.setSuccess("Logged in successful!");
+      },
+      error => {
+        this.userService.setError("Something went wrong!");
+      }
+    )
     this.router.navigate(['/home']);
   }
 
